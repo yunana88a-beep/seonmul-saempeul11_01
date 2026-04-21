@@ -199,8 +199,6 @@ export default function Header() {
             <div className="w-6 h-0.5 bg-current rounded-none"></div>
           </button>
         )}
-
-        {/* 모바일 사이드바 */}
         {/* 모바일 사이드바 */}
         <div
           className={`fixed inset-0 z-[60] transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
@@ -210,11 +208,9 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
           />
           <div
-            // ✨ 포인트 1: h-screen 대신 h-[100dvh]를 사용하여 모바일 브라우저 UI 변화에 유연하게 대응
-            // ✨ 포인트 2: pb-24를 추가하여 하단 바 위로 버튼이 충분히 올라오게 설정
             className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-24 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
-            <div className="flex justify-end mb-8">
+            <div className="flex justify-end">
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-white p-2"
