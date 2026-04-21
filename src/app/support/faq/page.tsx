@@ -230,9 +230,10 @@ export default function FaqPage() {
               <h4 className="text-xl font-bold text-white mb-2">
                 원하시는 답변을 찾지 못하셨나요?
               </h4>
-              <p className="text-gray-400 text-sm">
-                고객센터를 통해 1:1 문의를 남겨주시면 빠르게 답변해
-                드리겠습니다.
+              <p className="text-gray-400 text-sm break-keep">
+                고객센터를 통해 1:1 문의를 남겨주시면{' '}
+                <br className="md:hidden" />
+                빠르게 답변해 드리겠습니다.
               </p>
             </div>
             <button className="px-8 py-4 bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors whitespace-nowrap rounded-none">

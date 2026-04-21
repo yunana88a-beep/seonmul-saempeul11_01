@@ -16,7 +16,7 @@ const SLIDES = [
     id: 2,
     tag: 'Proven Performance',
     title: '수익률이 증명한\n자동매매의 기준',
-    subtitle: '시장 흐름을 예측하는 기술력, 그 어떤 타이밍도 놓치지 않습니다',
+    subtitle: '시장 흐름을 예측하는 기술력\n그 어떤 타이밍도 놓치지 않습니다',
     image: '/images/hero2.webp',
   },
   {
@@ -93,7 +93,12 @@ export default function Hero() {
             </h1>
 
             <p className="text-gray-400 text-base md:text-2xl font-light max-w-3xl mx-auto break-keep leading-relaxed">
-              {slide.subtitle}
+              {slide.subtitle.split('\n').map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i === 0 && <br className="md:hidden" />}
+                </span>
+              ))}
             </p>
           </div>
         );
