@@ -69,7 +69,7 @@ export default function ProgramPage() {
       </section>
 
       {/* 2. Technical Core: 모바일 여백(py-16) 축소 */}
-      <section className="py-16 md:py-24 px-6 border-y border-white/5 bg-zinc-950 overflow-hidden">
+      <section className="py-8 md:py-32 px-6 border-y border-white/5 bg-zinc-950 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
             <div>
@@ -158,7 +158,7 @@ export default function ProgramPage() {
       </section>
 
       {/* 4. Bottom CTA: 모바일 여백(py-24) 축소 및 가로 스크롤 방지 */}
-      <section className="relative py-24 md:py-48 px-6 text-center border-t border-white/10 overflow-hidden CTASection">
+      <section className="relative py-8 md:py-32 px-6 text-center border-t border-white/10 overflow-hidden CTASection">
         <StarfieldBackground />
 
         <div className="relative z-10 CTAContent max-w-5xl mx-auto flex flex-col items-center">

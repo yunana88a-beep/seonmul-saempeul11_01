@@ -75,7 +75,7 @@ export default function CustomerSupport() {
   }, []);
 
   return (
-    <section className="relative py-16 md:py-32 px-6 overflow-hidden border-y border-white/5 bg-black">
+    <section className="relative py-8 md:py-32 px-6 overflow-hidden border-y border-white/5 bg-black">
       <StarfieldBackground />
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">

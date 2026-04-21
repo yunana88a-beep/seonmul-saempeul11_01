@@ -96,7 +96,7 @@ export default function TrialPage() {
       </section>
 
       {/* 2. Process Steps */}
-      <section className="relative py-20 md:py-32 px-6 overflow-hidden border-y border-white/5 bg-zinc-950 FeaturesSection">
+      <section className="relative py-8 md:py-32 px-6 overflow-hidden border-y border-white/5 bg-zinc-950 FeaturesSection">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/process-bg.webp"
@@ -167,7 +167,7 @@ export default function TrialPage() {
       </section>
 
       {/* 3. Bottom CTA */}
-      <section className="relative py-24 md:py-48 px-6 text-center border-t border-white/10 overflow-hidden CTASection">
+      <section className="relative py-8 md:py-32 px-6 text-center border-t border-white/10 overflow-hidden CTASection">
         <StarfieldBackground />
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
