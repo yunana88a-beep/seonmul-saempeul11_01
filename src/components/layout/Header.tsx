@@ -7,6 +7,20 @@ import Button from '../ui/Button';
 
 // --- 직관적인 형태의 SVG 아이콘들 ---
 const Icons = {
+  // ✨ 홈 메뉴를 위한 새 아이콘 추가
+  Home: () => (
+    <svg
+      className="w-4 h-4 mr-2 inline-block"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="square"
+    >
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <polyline points="9 22 9 12 15 12 15 22" />
+    </svg>
+  ),
   Building: () => (
     <svg
       className="w-4 h-4 mr-2 inline-block"
@@ -79,6 +93,8 @@ const Icons = {
 };
 
 const NAV_ITEMS = [
+  // ✨ 홈 메뉴 추가
+  { label: '홈', href: '/', icon: <Icons.Home /> },
   { label: '회사소개', href: '/about', icon: <Icons.Building /> },
   { label: '프로그램 소개', href: '/program', icon: <Icons.Monitor /> },
   { label: '이용절차 및 무료체험', href: '/trial', icon: <Icons.Checklist /> },
@@ -98,8 +114,6 @@ export default function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
-  // ✨ 여러 아코디언이 생길 경우를 대비해, 열려있는 메뉴의 이름을 저장하도록 변경
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
 
   useEffect(() => {
@@ -113,7 +127,6 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
-  // ✨ 모바일 아코디언 토글 함수
   const toggleSubMenu = (label: string) => {
     setOpenSubMenu(openSubMenu === label ? null : label);
   };
@@ -130,7 +143,7 @@ export default function Header() {
           <span className="text-blue-600 mr-1">⚡</span>SMPLE11
         </Link>
 
-        {/* 데스크탑 네비게이션 (유지) */}
+        {/* 데스크탑 네비게이션 */}
         <nav className="hidden lg:flex items-center gap-6">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
@@ -175,7 +188,7 @@ export default function Header() {
           </Button>
         </div>
 
-        {/* 모바일 햄버거 버튼 */}
+        {/* 모바일 버튼 */}
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
@@ -188,6 +201,7 @@ export default function Header() {
         )}
 
         {/* 모바일 사이드바 */}
+        {/* 모바일 사이드바 */}
         <div
           className={`fixed inset-0 z-[60] transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         >
@@ -196,7 +210,9 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
           />
           <div
-            className={`absolute right-0 top-0 bottom-0 w-64 h-screen bg-zinc-950 border-l border-white/10 p-6 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            // ✨ 포인트 1: h-screen 대신 h-[100dvh]를 사용하여 모바일 브라우저 UI 변화에 유연하게 대응
+            // ✨ 포인트 2: pb-24를 추가하여 하단 바 위로 버튼이 충분히 올라오게 설정
+            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-24 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="flex justify-end mb-8">
               <button
@@ -215,14 +231,13 @@ export default function Header() {
               </button>
             </div>
 
-            <nav className="flex flex-col gap-2 flex-1">
+            <nav className="flex flex-col gap-2 flex-1 overflow-y-auto">
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item.href);
                 const isSubOpen = openSubMenu === item.label;
 
                 return (
                   <div key={item.href} className="flex flex-col">
-                    {/* ✨ 서브메뉴 유무에 따라 버튼(아코디언)과 링크(이동)로 동작 분리 */}
                     {item.subItems ? (
                       <button
                         onClick={() => toggleSubMenu(item.label)}
@@ -256,7 +271,6 @@ export default function Header() {
                             key={sub.href}
                             href={sub.href}
                             onClick={() => setIsOpen(false)}
-                            // ✨ pl-12를 pl-4로 수정하여 과도한 왼쪽 여백 제거
                             className="text-sm font-medium py-3 pl-4 flex items-center text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
                           >
                             <span className="text-white/20 mr-3 font-mono ml-2">
@@ -272,7 +286,8 @@ export default function Header() {
               })}
             </nav>
 
-            <div className="mt-8 pt-8 border-t border-white/10">
+            {/* ✨ 포인트 3: mb-4를 추가하여 바닥에 딱 붙지 않게 여유 공간 확보 */}
+            <div className="mt-8 pt-8 border-t border-white/10 mb-4">
               <Button className="w-full">무료체험 신청하기</Button>
             </div>
           </div>

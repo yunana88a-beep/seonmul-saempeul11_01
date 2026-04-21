@@ -179,7 +179,8 @@ export default function TrialPage() {
             </span>
           </h2>
           <p className="text-gray-400 text-base md:text-2xl mb-10 md:mb-16 font-light break-keep">
-            전문 상담원이 신청 확인 후 순차적으로 연락을 드립니다.
+            전문 상담원이 신청 확인 후 <br className="md:hidden" />
+            순차적으로 연락을 드립니다.
           </p>
 
           <div className="flex w-full justify-center">
