@@ -143,7 +143,6 @@ export default function Header() {
           <span className="text-blue-600 mr-1">⚡</span>SMPLE11
         </Link>
 
-        {/* 데스크탑 네비게이션 */}
         <nav className="hidden lg:flex items-center gap-6">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
@@ -202,7 +201,6 @@ export default function Header() {
         )}
       </div>
 
-      {/* 모바일 사이드바 Portal */}
       {mounted &&
         createPortal(
           <div
@@ -237,13 +235,12 @@ export default function Header() {
                 </button>
               </div>
 
-              <nav className="flex flex-col flex-1 overflow-y-auto">
-                {NAV_ITEMS.map((item, index) => {
+              <nav className="flex flex-col flex-1 overflow-y-auto mt-4">
+                {NAV_ITEMS.map((item) => {
                   const active = isActive(item.href);
                   const isSubOpen = openSubMenu === item.label;
 
                   return (
-                    // ✨ 수정 포인트: border-t(상단선)를 기본으로 하되, first:border-t-0(홈 위는 제거), last:border-b(고객센터 밑은 추가)
                     <div
                       key={item.href}
                       className="flex flex-col w-full border-t border-white/20 first:border-t-0 last:border-b"
@@ -253,7 +250,6 @@ export default function Header() {
                           onClick={() => toggleSubMenu(item.label)}
                           className={`text-lg font-bold px-8 py-5 flex items-center justify-between transition-colors w-full whitespace-nowrap ${active || isSubOpen ? 'text-blue-500' : 'text-gray-300'}`}
                         >
-                          {/* 아이콘-텍스트 수직 중앙 정렬 */}
                           <div className="flex items-center space-x-4">
                             <span className="flex items-center justify-center w-6 h-6">
                               {item.icon}
@@ -288,8 +284,13 @@ export default function Header() {
                               key={sub.href}
                               href={sub.href}
                               onClick={() => setIsOpen(false)}
-                              className="text-sm font-medium py-4 px-20 flex items-center text-gray-400 hover:text-white transition-colors"
+                              // ✨ px-20에서 px-12로 여백 축소
+                              className="text-sm font-medium py-2 px-10 flex items-center text-gray-400 hover:text-white transition-colors"
                             >
+                              {/* ✨ 대시(-) 다시 추가 */}
+                              <span className="text-white/20 mr-3 font-mono">
+                                -
+                              </span>
                               {sub.label}
                             </Link>
                           ))}
@@ -301,7 +302,7 @@ export default function Header() {
               </nav>
 
               <div className="p-8 pb-12">
-                <Button className="w-full py-2 text-lg font-bold">
+                <Button className="w-full py-5 text-lg font-bold">
                   무료체험 신청하기
                 </Button>
               </div>
