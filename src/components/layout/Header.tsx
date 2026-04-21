@@ -289,7 +289,7 @@ export default function Header() {
             </nav>
 
             {/* ✨ 버튼 하단 여백 mb-8 추가 */}
-            <div className="mt-8 pt-8 border-t border-white/10 mb-8">
+            <div className="mt-8 pt-8 border-t border-white/10 ">
               <Button className="w-full">무료체험 신청하기</Button>
             </div>
           </div>
