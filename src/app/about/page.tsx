@@ -78,7 +78,7 @@ export default function AboutPage() {
 
       {/* 1. Hero Section: ProgramPage와 동일하게 모바일 여백(pt-32 pb-20) 및 폰트 사이즈 조정 */}
       <section className="relative pt-32 md:pt-48 pb-20 md:pb-32 px-6 overflow-hidden HeroSection">
-        <HeroBackground src="/images/about-hero.jpg" />
+        <HeroBackground src="/images/about-hero.webp" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
           <div className="inline-block px-4 py-1.5 mb-6 md:mb-8 border border-white/20 bg-white/5 backdrop-blur-md rounded-full animate-fade-in">
@@ -110,7 +110,7 @@ export default function AboutPage() {
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-none blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
               <div className="relative aspect-square bg-zinc-900 overflow-hidden border border-white/10">
                 <Image
-                  src="/images/philosophy.jpg"
+                  src="/images/philosophy.webp"
                   alt="Philosophy"
                   fill
                   className="object-cover opacity-80 transition duration-700 group-hover:scale-105"
@@ -163,7 +163,7 @@ export default function AboutPage() {
       <section className="relative py-20 md:py-32 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/values-bg.jpg"
+            src="/images/values-bg.webp"
             alt="Values Background"
             fill
             className="object-cover opacity-50"
