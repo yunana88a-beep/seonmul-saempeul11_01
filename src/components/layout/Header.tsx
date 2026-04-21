@@ -220,7 +220,7 @@ export default function Header() {
             <div
               className={`absolute right-0 top-0 bottom-0 w-72 h-[100dvh] bg-zinc-950 border-l border-white/10 flex flex-col shadow-2xl z-10 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             >
-              <div className="flex justify-end p-6 pb-2">
+              <div className="flex justify-end p-6 pb-0">
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-gray-400 hover:text-white p-2"
