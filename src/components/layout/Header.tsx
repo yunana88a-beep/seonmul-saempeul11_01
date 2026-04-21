@@ -301,7 +301,7 @@ export default function Header() {
               </nav>
 
               <div className="p-8 pb-12">
-                <Button className="w-full py-5 text-lg font-bold">
+                <Button className="w-full py-2 text-lg font-bold">
                   무료체험 신청하기
                 </Button>
               </div>
