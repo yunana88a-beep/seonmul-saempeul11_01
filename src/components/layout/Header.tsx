@@ -6,13 +6,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Button from '../ui/Button';
 
+// --- Icons 세트 (수직 정렬을 위해 w-6 h-6 박스 규격 사용) ---
 const Icons = {
   Home: () => (
     <svg
-      className="w-4 h-4 mr-2 inline-block"
+      className="w-5 h-5 stroke-current fill-none"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="square"
     >
@@ -22,10 +21,8 @@ const Icons = {
   ),
   Building: () => (
     <svg
-      className="w-4 h-4 mr-2 inline-block"
+      className="w-5 h-5 stroke-current fill-none"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="square"
     >
@@ -38,10 +35,8 @@ const Icons = {
   ),
   Monitor: () => (
     <svg
-      className="w-4 h-4 mr-2 inline-block"
+      className="w-5 h-5 stroke-current fill-none"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="square"
     >
@@ -52,10 +47,8 @@ const Icons = {
   ),
   Checklist: () => (
     <svg
-      className="w-4 h-4 mr-2 inline-block"
+      className="w-5 h-5 stroke-current fill-none"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="square"
     >
@@ -66,10 +59,8 @@ const Icons = {
   ),
   Headset: () => (
     <svg
-      className="w-4 h-4 mr-2 inline-block"
+      className="w-5 h-5 stroke-current fill-none"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="square"
     >
@@ -79,10 +70,8 @@ const Icons = {
   ),
   ChevronDown: () => (
     <svg
-      className="w-3 h-3 ml-1.5 opacity-50 group-hover:opacity-100 transition-opacity"
+      className="w-4 h-4 stroke-current fill-none"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
       strokeWidth="3"
       strokeLinecap="square"
     >
@@ -116,7 +105,7 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true); // 컴포넌트가 브라우저에 나타나면 true
+    setMounted(true);
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -154,7 +143,7 @@ export default function Header() {
           <span className="text-blue-600 mr-1">⚡</span>SMPLE11
         </Link>
 
-        {/* 데스크탑 메뉴 (기본 코드) */}
+        {/* 데스크탑 네비게이션 */}
         <nav className="hidden lg:flex items-center gap-6">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
@@ -167,8 +156,12 @@ export default function Header() {
                   href={item.href}
                   className={`text-sm font-bold flex items-center transition-all px-4 py-2 whitespace-nowrap ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
                 >
-                  {item.icon} {item.label}{' '}
-                  {item.subItems && <Icons.ChevronDown />}
+                  {item.icon} <span className="ml-2">{item.label}</span>{' '}
+                  {item.subItems && (
+                    <span className="ml-1">
+                      <Icons.ChevronDown />
+                    </span>
+                  )}
                 </Link>
                 {item.subItems && (
                   <div className="absolute top-[100%] left-0 w-48 bg-zinc-950 border border-white/10 shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 rounded-none overflow-hidden">
@@ -197,7 +190,6 @@ export default function Header() {
           </Button>
         </div>
 
-        {/* 햄버거 버튼 */}
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
@@ -210,31 +202,31 @@ export default function Header() {
         )}
       </div>
 
+      {/* 모바일 사이드바 Portal */}
       {mounted &&
         createPortal(
           <div
-            className={`fixed inset-0 z-[999999] lg:hidden transition-all duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+            className={`fixed inset-0 z-[100000] lg:hidden transition-all duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
           >
-            {/* 이제 Header 박스를 벗어나 화면 전체를 대상으로 블러를 잡습니다. */}
             <div
-              className="absolute inset-0 bg-black/60 backdrop-blur-md"
+              className="fixed inset-0 bg-black/60 backdrop-blur-md"
               onClick={() => setIsOpen(false)}
               style={{
-                WebkitBackdropFilter: 'blur(8px)',
-                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                backdropFilter: 'blur(10px)',
               }}
             />
 
             <div
-              className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-10 flex flex-col shadow-2xl z-10 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+              className={`absolute right-0 top-0 bottom-0 w-72 h-[100dvh] bg-zinc-950 border-l border-white/10 flex flex-col shadow-2xl z-10 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             >
-              <div className="flex justify-end mb-8">
+              <div className="flex justify-end p-6 pb-2">
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-gray-400 hover:text-white p-2"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="w-8 h-8"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -245,23 +237,31 @@ export default function Header() {
                 </button>
               </div>
 
-              <nav className="flex flex-col gap-2 flex-1 overflow-y-auto pr-2">
-                {NAV_ITEMS.map((item) => {
+              <nav className="flex flex-col flex-1 overflow-y-auto mt-4">
+                {NAV_ITEMS.map((item, index) => {
                   const active = isActive(item.href);
                   const isSubOpen = openSubMenu === item.label;
+
                   return (
-                    <div key={item.href} className="flex flex-col">
+                    // ✨ 수정 포인트: border-t(상단선)를 기본으로 하되, first:border-t-0(홈 위는 제거), last:border-b(고객센터 밑은 추가)
+                    <div
+                      key={item.href}
+                      className="flex flex-col w-full border-t border-white/20 first:border-t-0 last:border-b"
+                    >
                       {item.subItems ? (
                         <button
                           onClick={() => toggleSubMenu(item.label)}
-                          className={`text-base font-bold p-3 flex items-center justify-between transition-colors w-full whitespace-nowrap ${active || isSubOpen ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
+                          className={`text-lg font-bold px-8 py-5 flex items-center justify-between transition-colors w-full whitespace-nowrap ${active || isSubOpen ? 'text-blue-500' : 'text-gray-300'}`}
                         >
-                          <div className="flex items-center">
-                            <span className="opacity-70 mr-3">{item.icon}</span>
-                            {item.label}
+                          {/* 아이콘-텍스트 수직 중앙 정렬 */}
+                          <div className="flex items-center space-x-4">
+                            <span className="flex items-center justify-center w-6 h-6">
+                              {item.icon}
+                            </span>
+                            <span className="leading-none">{item.label}</span>
                           </div>
                           <div
-                            className={`transition-transform duration-300 ${isSubOpen ? 'rotate-180 text-blue-500' : 'text-white/40'}`}
+                            className={`transition-transform duration-300 ${isSubOpen ? 'rotate-180 text-blue-500' : 'text-white/20'}`}
                           >
                             <Icons.ChevronDown />
                           </div>
@@ -270,24 +270,26 @@ export default function Header() {
                         <Link
                           href={item.href}
                           onClick={() => setIsOpen(false)}
-                          className={`text-base font-bold p-3 flex items-center transition-colors whitespace-nowrap ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
+                          className={`text-lg font-bold px-8 py-5 flex items-center transition-colors whitespace-nowrap ${active ? 'text-blue-500' : 'text-gray-300'}`}
                         >
-                          <span className="opacity-70 mr-3">{item.icon}</span>
-                          {item.label}
+                          <div className="flex items-center space-x-4">
+                            <span className="flex items-center justify-center w-6 h-6">
+                              {item.icon}
+                            </span>
+                            <span className="leading-none">{item.label}</span>
+                          </div>
                         </Link>
                       )}
+
                       {item.subItems && isSubOpen && (
-                        <div className="bg-white/5 flex flex-col mb-4 py-2">
+                        <div className="bg-white/[0.03] flex flex-col py-2 border-t border-white/10">
                           {item.subItems.map((sub) => (
                             <Link
                               key={sub.href}
                               href={sub.href}
                               onClick={() => setIsOpen(false)}
-                              className="text-sm font-medium py-3 pl-4 flex items-center text-gray-400 hover:text-white hover:bg-white/5 whitespace-nowrap"
+                              className="text-sm font-medium py-4 px-20 flex items-center text-gray-400 hover:text-white transition-colors"
                             >
-                              <span className="text-white/20 mr-3 font-mono ml-2">
-                                -
-                              </span>
                               {sub.label}
                             </Link>
                           ))}
@@ -298,12 +300,14 @@ export default function Header() {
                 })}
               </nav>
 
-              <div className="mt-8 pt-8 border-t border-white/10 mb-6">
-                <Button className="w-full">무료체험 신청하기</Button>
+              <div className="p-8 pb-12">
+                <Button className="w-full py-5 text-lg font-bold">
+                  무료체험 신청하기
+                </Button>
               </div>
             </div>
           </div>,
-          document.body, // 순간이동 장소
+          document.body,
         )}
     </header>
   );
