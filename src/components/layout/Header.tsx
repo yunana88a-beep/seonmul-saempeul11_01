@@ -5,9 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Button from '../ui/Button';
 
-// --- 직관적인 형태의 SVG 아이콘들 ---
 const Icons = {
-  // ✨ 홈 메뉴를 위한 새 아이콘 추가
   Home: () => (
     <svg
       className="w-4 h-4 mr-2 inline-block"
@@ -93,7 +91,6 @@ const Icons = {
 };
 
 const NAV_ITEMS = [
-  // ✨ 홈 메뉴 추가
   { label: '홈', href: '/', icon: <Icons.Home /> },
   { label: '회사소개', href: '/about', icon: <Icons.Building /> },
   { label: '프로그램 소개', href: '/program', icon: <Icons.Monitor /> },
@@ -115,6 +112,18 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
+
+  // ✨ 기능 1: 사이드바 오픈 시 배경 스크롤 방지
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -154,20 +163,18 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className={`text-sm font-bold flex items-center transition-all px-4 py-2 ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
+                  className={`text-sm font-bold flex items-center transition-all px-4 py-2 whitespace-nowrap ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
                 >
-                  {item.icon}
-                  {item.label}
+                  {item.icon} {item.label}{' '}
                   {item.subItems && <Icons.ChevronDown />}
                 </Link>
-
                 {item.subItems && (
                   <div className="absolute top-[100%] left-0 w-48 bg-zinc-950 border border-white/10 shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 rounded-none overflow-hidden">
                     {item.subItems.map((sub) => (
                       <Link
                         key={sub.href}
                         href={sub.href}
-                        className="block px-6 py-4 text-xs font-bold text-gray-400 hover:text-white hover:bg-blue-600/10 border-b border-white/5 last:border-0 transition-colors"
+                        className="block px-6 py-4 text-xs font-bold text-gray-400 hover:text-white hover:bg-blue-600/10 border-b border-white/5 last:border-0 transition-colors whitespace-nowrap"
                       >
                         {sub.label}
                       </Link>
@@ -188,17 +195,17 @@ export default function Header() {
           </Button>
         </div>
 
-        {/* 모바일 버튼 */}
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
             className="lg:hidden absolute right-6 top-6 z-50 p-2 text-white"
           >
-            <div className="w-6 h-0.5 bg-current mb-1.5 rounded-none"></div>
-            <div className="w-6 h-0.5 bg-current mb-1.5 rounded-none"></div>
-            <div className="w-6 h-0.5 bg-current rounded-none"></div>
+            <div className="w-6 h-0.5 bg-current mb-1.5" />
+            <div className="w-6 h-0.5 bg-current mb-1.5" />
+            <div className="w-6 h-0.5 bg-current" />
           </button>
         )}
+
         {/* 모바일 사이드바 */}
         <div
           className={`fixed inset-0 z-[60] transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
@@ -208,7 +215,8 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
           />
           <div
-            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-24 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            // ✨ 기능 2: h-[100dvh] 및 pb-32 적용하여 하단바 가림 문제 해결
+            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-32 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="flex justify-end">
               <button
@@ -221,8 +229,8 @@ export default function Header() {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
             </div>
@@ -231,13 +239,12 @@ export default function Header() {
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item.href);
                 const isSubOpen = openSubMenu === item.label;
-
                 return (
                   <div key={item.href} className="flex flex-col">
                     {item.subItems ? (
                       <button
                         onClick={() => toggleSubMenu(item.label)}
-                        className={`text-base font-bold p-3 flex items-center justify-between transition-colors w-full ${active || isSubOpen ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
+                        className={`text-base font-bold p-3 flex items-center justify-between transition-colors w-full whitespace-nowrap ${active || isSubOpen ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
                       >
                         <div className="flex items-center">
                           <span className="opacity-70 mr-3">{item.icon}</span>
@@ -253,13 +260,12 @@ export default function Header() {
                       <Link
                         href={item.href}
                         onClick={() => setIsOpen(false)}
-                        className={`text-base font-bold p-3 flex items-center transition-colors ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
+                        className={`text-base font-bold p-3 flex items-center transition-colors whitespace-nowrap ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
                       >
                         <span className="opacity-70 mr-3">{item.icon}</span>
                         {item.label}
                       </Link>
                     )}
-
                     {item.subItems && isSubOpen && (
                       <div className="bg-white/5 flex flex-col mb-4 py-2">
                         {item.subItems.map((sub) => (
@@ -267,7 +273,7 @@ export default function Header() {
                             key={sub.href}
                             href={sub.href}
                             onClick={() => setIsOpen(false)}
-                            className="text-sm font-medium py-3 pl-4 flex items-center text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+                            className="text-sm font-medium py-3 pl-4 flex items-center text-gray-400 hover:text-white hover:bg-white/5 whitespace-nowrap"
                           >
                             <span className="text-white/20 mr-3 font-mono ml-2">
                               -
@@ -282,8 +288,8 @@ export default function Header() {
               })}
             </nav>
 
-            {/* ✨ 포인트 3: mb-4를 추가하여 바닥에 딱 붙지 않게 여유 공간 확보 */}
-            <div className="mt-8 pt-8 border-t border-white/10 mb-4">
+            {/* ✨ 버튼 하단 여백 mb-8 추가 */}
+            <div className="mt-8 pt-8 border-t border-white/10 mb-8">
               <Button className="w-full">무료체험 신청하기</Button>
             </div>
           </div>
