@@ -55,7 +55,7 @@ export default function Hero() {
             alt={`Hero Background ${slide.id}`}
             fill
             priority={index === 0}
-            className="object-cover opacity-60" // ✨ 이미지 가시성을 조절하기 위해 opacity-60 추가
+            className="object-cover opacity-90"
           />
           {/* ✨ 서브페이지들과 동일하게 상하단 어두운 그라데이션 적용하여 텍스트 가독성 확보 */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black" />
