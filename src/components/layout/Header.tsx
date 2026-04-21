@@ -215,8 +215,8 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
           />
           <div
-            // ✨ 기능 2: h-[100dvh] 및 pb-32 적용하여 하단바 가림 문제 해결
-            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-32 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            // ✨ pb-32에서 pb-10으로 줄여서 버튼을 아래로 적당히 내렸습니다.
+            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-10 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="flex justify-end">
               <button
@@ -288,8 +288,8 @@ export default function Header() {
               })}
             </nav>
 
-            {/* ✨ 버튼 하단 여백 mb-8 추가 */}
-            <div className="mt-8 pt-8 border-t border-white/10 ">
+            {/* ✨ mt-8 pt-8은 유지하고, mb-6을 추가해 바닥에서 살짝만 띄웠습니다. */}
+            <div className="mt-8 pt-8 border-t border-white/10 mb-6">
               <Button className="w-full">무료체험 신청하기</Button>
             </div>
           </div>
