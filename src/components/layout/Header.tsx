@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom'; // ✨ 추가
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Button from '../ui/Button';
 
+// --- Icons (기존과 동일) ---
 const Icons = {
   Home: () => (
     <svg
@@ -112,8 +114,10 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false); // ✨ 포탈용 마운트 상태
 
   useEffect(() => {
+    setMounted(true); // 컴포넌트가 브라우저에 나타나면 true
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -141,7 +145,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md border-b border-white/10 py-2 shadow-xl' : 'bg-transparent py-4'}`}
+      className={`fixed top-0 left-0 w-full z-[999] transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md border-b border-white/10 py-2 shadow-xl' : 'bg-transparent py-4'}`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link
@@ -151,7 +155,7 @@ export default function Header() {
           <span className="text-blue-600 mr-1">⚡</span>SMPLE11
         </Link>
 
-        {/* 데스크탑 네비게이션 */}
+        {/* 데스크탑 메뉴 (기본 코드) */}
         <nav className="hidden lg:flex items-center gap-6">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
@@ -194,111 +198,115 @@ export default function Header() {
           </Button>
         </div>
 
+        {/* 햄버거 버튼 */}
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="lg:hidden absolute right-6 top-6 z-50 p-2 text-white"
+            className="lg:hidden p-2 text-white"
           >
             <div className="w-6 h-0.5 bg-current mb-1.5" />
             <div className="w-6 h-0.5 bg-current mb-1.5" />
             <div className="w-6 h-0.5 bg-current" />
           </button>
         )}
+      </div>
 
-        {/* 모바일 사이드바 */}
-        <div
-          className={`fixed inset-0 z-[60] transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-        >
+      {/* ✨ 해결책: 사이드바를 Portal을 통해 Body 바로 아래로 쏘아 올립니다. */}
+      {mounted &&
+        createPortal(
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md"
-            onClick={() => setIsOpen(false)}
-            style={{
-              WebkitBackdropFilter: 'blur(4px)',
-              backdropFilter: 'blur(4px)',
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden',
-            }}
-          />
-
-          <div
-            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-10 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed inset-0 z-[999999] lg:hidden transition-all duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
           >
-            <div className="flex justify-end">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white p-2"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
+            {/* 이제 Header 박스를 벗어나 화면 전체를 대상으로 블러를 잡습니다. */}
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
+              onClick={() => setIsOpen(false)}
+              style={{
+                WebkitBackdropFilter: 'blur(8px)',
+                backdropFilter: 'blur(8px)',
+              }}
+            />
 
-            <nav className="flex flex-col gap-2 flex-1 overflow-y-auto">
-              {NAV_ITEMS.map((item) => {
-                const active = isActive(item.href);
-                const isSubOpen = openSubMenu === item.label;
-                return (
-                  <div key={item.href} className="flex flex-col">
-                    {item.subItems ? (
-                      <button
-                        onClick={() => toggleSubMenu(item.label)}
-                        className={`text-base font-bold p-3 flex items-center justify-between transition-colors w-full whitespace-nowrap ${active || isSubOpen ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
-                      >
-                        <div className="flex items-center">
+            <div
+              className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-10 flex flex-col shadow-2xl z-10 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            >
+              <div className="flex justify-end mb-8">
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-400 hover:text-white p-2"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+
+              <nav className="flex flex-col gap-2 flex-1 overflow-y-auto pr-2">
+                {NAV_ITEMS.map((item) => {
+                  const active = isActive(item.href);
+                  const isSubOpen = openSubMenu === item.label;
+                  return (
+                    <div key={item.href} className="flex flex-col">
+                      {item.subItems ? (
+                        <button
+                          onClick={() => toggleSubMenu(item.label)}
+                          className={`text-base font-bold p-3 flex items-center justify-between transition-colors w-full whitespace-nowrap ${active || isSubOpen ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
+                        >
+                          <div className="flex items-center">
+                            <span className="opacity-70 mr-3">{item.icon}</span>
+                            {item.label}
+                          </div>
+                          <div
+                            className={`transition-transform duration-300 ${isSubOpen ? 'rotate-180 text-blue-500' : 'text-white/40'}`}
+                          >
+                            <Icons.ChevronDown />
+                          </div>
+                        </button>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
+                          className={`text-base font-bold p-3 flex items-center transition-colors whitespace-nowrap ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
+                        >
                           <span className="opacity-70 mr-3">{item.icon}</span>
                           {item.label}
+                        </Link>
+                      )}
+                      {item.subItems && isSubOpen && (
+                        <div className="bg-white/5 flex flex-col mb-4 py-2">
+                          {item.subItems.map((sub) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              onClick={() => setIsOpen(false)}
+                              className="text-sm font-medium py-3 pl-4 flex items-center text-gray-400 hover:text-white hover:bg-white/5 whitespace-nowrap"
+                            >
+                              <span className="text-white/20 mr-3 font-mono ml-2">
+                                -
+                              </span>
+                              {sub.label}
+                            </Link>
+                          ))}
                         </div>
-                        <div
-                          className={`transition-transform duration-300 ${isSubOpen ? 'rotate-180 text-blue-500' : 'text-white/40'}`}
-                        >
-                          <Icons.ChevronDown />
-                        </div>
-                      </button>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`text-base font-bold p-3 flex items-center transition-colors whitespace-nowrap ${active ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}
-                      >
-                        <span className="opacity-70 mr-3">{item.icon}</span>
-                        {item.label}
-                      </Link>
-                    )}
-                    {item.subItems && isSubOpen && (
-                      <div className="bg-white/5 flex flex-col mb-4 py-2">
-                        {item.subItems.map((sub) => (
-                          <Link
-                            key={sub.href}
-                            href={sub.href}
-                            onClick={() => setIsOpen(false)}
-                            className="text-sm font-medium py-3 pl-4 flex items-center text-gray-400 hover:text-white hover:bg-white/5 whitespace-nowrap"
-                          >
-                            <span className="text-white/20 mr-3 font-mono ml-2">
-                              -
-                            </span>
-                            {sub.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </nav>
+                      )}
+                    </div>
+                  );
+                })}
+              </nav>
 
-            <div className="mt-8 pt-8 border-t border-white/10 mb-6">
-              <Button className="w-full">무료체험 신청하기</Button>
+              <div className="mt-8 pt-8 border-t border-white/10 mb-6">
+                <Button className="w-full">무료체험 신청하기</Button>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </div>,
+          document.body, // 순간이동 장소
+        )}
     </header>
   );
 }
