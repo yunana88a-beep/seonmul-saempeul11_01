@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom'; // ✨ 추가
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Button from '../ui/Button';
 
-// --- Icons (기존과 동일) ---
 const Icons = {
   Home: () => (
     <svg
@@ -114,7 +113,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false); // ✨ 포탈용 마운트 상태
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true); // 컴포넌트가 브라우저에 나타나면 true
@@ -211,7 +210,6 @@ export default function Header() {
         )}
       </div>
 
-      {/* ✨ 해결책: 사이드바를 Portal을 통해 Body 바로 아래로 쏘아 올립니다. */}
       {mounted &&
         createPortal(
           <div
