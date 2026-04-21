@@ -24,7 +24,7 @@ const EDU_ITEMS = [
 
 export default function Education() {
   return (
-    <section className="relative py-32 px-6 bg-black overflow-hidden border-t border-white/5">
+    <section className="relative py-8 md:py-32 px-6 bg-black overflow-hidden border-t border-white/5">
       {/* 1920x1080 배경 이미지 영역 */}
       <div className="absolute inset-0 z-0">
         <Image

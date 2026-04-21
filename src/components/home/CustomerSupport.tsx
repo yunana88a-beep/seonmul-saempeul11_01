@@ -2,10 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-// ✨ 새로 분리한 은하수 배경 컴포넌트 불러오기 (경로는 폴더 구조에 맞게 수정하세요)
 import StarfieldBackground from '../ui/StarfieldBackground';
 
-// --- 변경된 메뉴에 맞춘 직관적인 직선형 라인 아트 아이콘 ---
 const Icons = {
   Notice: () => (
     <svg
@@ -47,7 +45,6 @@ const Icons = {
   ),
 };
 
-// --- 고객지원 3대 메뉴 데이터 ---
 const SUPPORT_MENUS = [
   { label: '공지사항', href: '/support/notice', icon: <Icons.Notice /> },
   { label: '자주 묻는 질문', href: '/support/faq', icon: <Icons.Faq /> },
@@ -62,24 +59,13 @@ export default function CustomerSupport() {
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const index = Number(entry.target.getAttribute('data-index'));
-
           if (entry.isIntersecting) {
-            setVisibleItems((prev) => {
-              const newSet = new Set(prev);
-              newSet.add(index);
-              return newSet;
-            });
-          } else {
-            setVisibleItems((prev) => {
-              const newSet = new Set(prev);
-              newSet.delete(index);
-              return newSet;
-            });
+            const index = Number(entry.target.getAttribute('data-index'));
+            setVisibleItems((prev) => new Set(prev).add(index));
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+      { threshold: 0.1 },
     );
 
     const elements = document.querySelectorAll('.support-card');
@@ -89,20 +75,17 @@ export default function CustomerSupport() {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-32 px-6 overflow-hidden border-y border-white/5 bg-black">
-      {/* ✨ 재사용 가능한 은하수 컴포넌트 삽입 */}
+    <section className="relative py-16 md:py-32 px-6 overflow-hidden border-y border-white/5 bg-black">
       <StarfieldBackground />
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
-        {/* 타이틀 영역 */}
-        <h3 className="text-blue-500 font-bold tracking-[0.3em] uppercase text-sm mb-4">
+        <h3 className="text-blue-500 font-bold tracking-[0.3em] uppercase text-xs mb-4">
           Customer Support
         </h3>
-        <h2 className="text-4xl md:text-6xl font-black text-white mb-12 md:mb-20 tracking-tighter">
+        <h2 className="text-3xl md:text-6xl font-black text-white mb-12 md:mb-20 tracking-tighter leading-tight break-keep">
           고객 지원 센터
         </h2>
 
-        {/* 3개의 메뉴 카드 그리드 */}
         <div className="grid md:grid-cols-3 gap-4 md:gap-6">
           {SUPPORT_MENUS.map((menu, index) => {
             const isVisible = visibleItems.has(index);
@@ -112,19 +95,37 @@ export default function CustomerSupport() {
                 key={index}
                 href={menu.href}
                 data-index={index}
-                className={`support-card group relative flex flex-col items-center justify-center p-8 md:p-14 border border-white/10 bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.05] hover:border-blue-500 transition-all duration-1000 ease-out rounded-none h-full shadow-2xl
-                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-16'}
+                className={`support-card group relative flex flex-col items-center justify-center p-8 md:p-14 
+                  border border-blue-500/20 bg-gradient-to-br from-blue-900/30 via-zinc-900/60 to-black 
+                  backdrop-blur-md transition-all duration-1000 ease-out rounded-none h-full 
+                  shadow-[0_0_30px_rgba(37,99,235,0.08)] hover:shadow-blue-500/30 hover:border-blue-500
+                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
                 `}
-                style={{ transitionDelay: `${index * 200}ms` }}
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
-                <div className="absolute top-0 left-0 w-full h-1 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+                {/* ✨ 4개 꼭짓점 포인트 디자인 */}
+                {/* 좌상단 */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-blue-500 opacity-40 group-hover:opacity-100 group-hover:w-4 group-hover:h-4 transition-all duration-500" />
+                {/* 우상단 */}
+                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-blue-500 opacity-40 group-hover:opacity-100 group-hover:w-4 group-hover:h-4 transition-all duration-500" />
+                {/* 좌하단 */}
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-blue-500 opacity-40 group-hover:opacity-100 group-hover:w-4 group-hover:h-4 transition-all duration-500" />
+                {/* 우하단 */}
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-blue-500 opacity-40 group-hover:opacity-100 group-hover:w-4 group-hover:h-4 transition-all duration-500" />
 
-                <div className="text-gray-500 group-hover:text-blue-500 group-hover:-translate-y-2 transition-all duration-500">
+                {/* 상단 파란색 바 (중앙에서 양옆으로 퍼지는 효과) */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-blue-400 group-hover:w-full transition-all duration-700 opacity-50" />
+
+                <div className="text-blue-400/80 group-hover:text-blue-500 group-hover:-translate-y-2 transition-all duration-500 transform scale-90 md:scale-100">
                   {menu.icon}
                 </div>
-                <span className="text-white font-bold text-lg break-keep group-hover:text-blue-400 transition-colors">
+
+                <span className="text-gray-100 font-bold text-lg break-keep group-hover:text-white transition-colors tracking-tight">
                   {menu.label}
                 </span>
+
+                {/* 중앙 블루 오버레이 (상시 푸른 기운을 유지) */}
+                <div className="absolute inset-0 bg-blue-600/[0.03] group-hover:bg-blue-600/[0.08] transition-colors pointer-events-none" />
               </Link>
             );
           })}

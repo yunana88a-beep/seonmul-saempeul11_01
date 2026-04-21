@@ -17,7 +17,7 @@ export default function ContactForm() {
   ];
 
   return (
-    <section className="relative py-24 px-4 md:px-6 bg-black overflow-hidden border-t border-white/5">
+    <section className="relative py-8 md:py-32 px-4 md:px-6 bg-black overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/contact-bg.webp"
@@ -35,7 +35,7 @@ export default function ContactForm() {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-transparent" />
 
           <h2 className="text-3xl md:text-4xl font-black text-white mb-10 text-center tracking-tight">
-            SMPLE11 자동매매 시작하기!
+            SMPLE11 자동매매 <br className="md:hidden" /> 시작하기!
           </h2>
 
           <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
