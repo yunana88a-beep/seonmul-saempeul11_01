@@ -113,7 +113,6 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
 
-  // ✨ 기능 1: 사이드바 오픈 시 배경 스크롤 방지
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -211,12 +210,18 @@ export default function Header() {
           className={`fixed inset-0 z-[60] transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         >
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 backdrop-blur-md"
             onClick={() => setIsOpen(false)}
+            style={{
+              WebkitBackdropFilter: 'blur(4px)',
+              backdropFilter: 'blur(4px)',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
+            }}
           />
+
           <div
-            // ✨ pb-32에서 pb-10으로 줄여서 버튼을 아래로 적당히 내렸습니다.
-            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-6 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`absolute right-0 top-0 bottom-0 w-64 h-[100dvh] bg-zinc-950 border-l border-white/10 p-6 pb-10 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="flex justify-end">
               <button
@@ -288,7 +293,6 @@ export default function Header() {
               })}
             </nav>
 
-            {/* ✨ mt-8 pt-8은 유지하고, mb-6을 추가해 바닥에서 살짝만 띄웠습니다. */}
             <div className="mt-8 pt-8 border-t border-white/10 mb-6">
               <Button className="w-full">무료체험 신청하기</Button>
             </div>

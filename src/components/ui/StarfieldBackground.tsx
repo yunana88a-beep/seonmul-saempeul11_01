@@ -49,7 +49,6 @@ export default function StarfieldBackground() {
           opacity: 0.3;
         }
 
-        /* ✨ 문제의 transform: scale() 제거! 오직 투명도로만 반짝임 유지 */
         @keyframes twinkle {
           0% { opacity: 0.1; }
           100% { opacity: 0.8; }

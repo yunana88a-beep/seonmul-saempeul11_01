@@ -90,7 +90,6 @@ const PROCESS_STEPS = [
   },
 ];
 
-// ✨ TrialPage와 동일하게 각 카드를 분리하여 개별 상태(가시성)를 관리합니다.
 // 스크롤 시 사라지는 버그 완벽 해결
 function ProcessCard({ step, index }: { step: any; index: number }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -118,7 +117,6 @@ function ProcessCard({ step, index }: { step: any; index: number }) {
   return (
     <div
       ref={cardRef}
-      // ✨ 모바일 패딩 p-8 -> p-6으로 약간 줄여서 타이트하게 구성
       className={`group relative p-6 md:p-8 border border-white/10 bg-zinc-950 hover:border-blue-500 transition-all duration-1000 ease-out rounded-none shadow-2xl flex flex-col items-center text-center
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
       `}
@@ -126,7 +124,6 @@ function ProcessCard({ step, index }: { step: any; index: number }) {
     >
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-      {/* ✨ 모바일에서 숫자, 아이콘 크기 및 여백 소폭 축소 */}
       <div className="text-3xl md:text-4xl font-black text-blue-500 mb-4 md:mb-6 font-mono">
         {step.id}
       </div>
@@ -158,7 +155,6 @@ export default function Process() {
   if (!mounted) return null;
 
   return (
-    // ✨ 메인 섹션 상하 여백 모바일에서 대폭 축소: py-32 -> py-16 md:py-32
     <section className="relative py-8 md:py-32 px-6 bg-black overflow-hidden border-t border-white/5">
       {/* 안정적인 구조의 사선 배경 디자인 */}
       <div className="absolute inset-0 pointer-events-none opacity-20 flex justify-center">
@@ -167,9 +163,7 @@ export default function Process() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* ✨ 헤더 여백 모바일에서 축소: mb-20 -> mb-10 md:mb-20 */}
         <div className="text-center mb-10 md:mb-20">
-          {/* ✨ 타이틀 크기 모바일에서 축소 및 강제 줄바꿈 방지 */}
           <h2 className="text-2xl md:text-5xl font-black text-white mb-4 md:mb-6 tracking-tight break-keep">
             고객을 위한 최고의 서비스를 제공합니다!
           </h2>
@@ -179,7 +173,6 @@ export default function Process() {
           </p>
         </div>
 
-        {/* ✨ 카드 간 간격 모바일에서 축소: gap-6 -> gap-4 md:gap-6 */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
           {PROCESS_STEPS.map((step, index) => (
             <ProcessCard key={step.id} step={step} index={index} />

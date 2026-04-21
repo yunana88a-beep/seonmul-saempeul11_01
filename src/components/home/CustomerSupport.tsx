@@ -103,7 +103,6 @@ export default function CustomerSupport() {
                 `}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
-                {/* ✨ 4개 꼭짓점 포인트 디자인 */}
                 {/* 좌상단 */}
                 <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-blue-500 opacity-40 group-hover:opacity-100 group-hover:w-4 group-hover:h-4 transition-all duration-500" />
                 {/* 우상단 */}

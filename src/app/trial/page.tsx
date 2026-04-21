@@ -43,7 +43,6 @@ export default function TrialPage() {
     setMounted(true);
   }, []);
 
-  // ✨ 핵심 해결책: HTML 렌더링이 완료된 후(mounted === true)에만 옵저버가 실행되도록 수정
   useEffect(() => {
     if (!mounted) return; // 화면이 아직 안 그려졌으면 기다림
 
@@ -64,7 +63,7 @@ export default function TrialPage() {
     elements.forEach((el) => observerRef.current?.observe(el));
 
     return () => observerRef.current?.disconnect();
-  }, [mounted]); // ✨ 의존성 배열에 mounted 추가!
+  }, [mounted]);
 
   if (!mounted) return null;
 

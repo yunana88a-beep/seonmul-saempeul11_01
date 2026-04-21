@@ -40,7 +40,6 @@ export default function Hero() {
   }, []);
 
   return (
-    // ✨ 모바일에서는 h-[75vh]로 줄이고 PC는 h-[90vh] 유지
     <section className="relative h-[75vh] md:h-[90vh] bg-black overflow-hidden flex items-center justify-center">
       {/* 1. 배경 이미지 영역 */}
       {SLIDES.map((slide, index) => (
@@ -57,14 +56,12 @@ export default function Hero() {
             priority={index === 0}
             className="object-cover opacity-90"
           />
-          {/* ✨ 서브페이지들과 동일하게 상하단 어두운 그라데이션 적용하여 텍스트 가독성 확보 */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black" />
         </div>
       ))}
 
       {/* 2. 텍스트 콘텐츠 영역 */}
       {SLIDES.map((slide, index) => {
-        // ✨ 타이틀에 \n 이 있을 경우 앞, 뒤를 분리하여 뒤쪽 텍스트에만 그라데이션을 줍니다.
         const [line1, line2] = slide.title.split('\n');
 
         return (
@@ -76,14 +73,12 @@ export default function Hero() {
                 : 'opacity-0 translate-y-8 pointer-events-none'
             }`}
           >
-            {/* ✨ 서브페이지에서 썼던 하이테크 느낌의 태그 추가 */}
             <div className="inline-block px-4 py-1.5 mb-6 md:mb-8 border border-white/20 bg-white/5 backdrop-blur-md rounded-full">
               <span className="text-blue-400 font-bold text-xs md:text-sm tracking-widest uppercase">
                 {slide.tag}
               </span>
             </div>
 
-            {/* ✨ 폰트 사이즈 조절 및 break-keep, 그라데이션 적용 */}
             <h1 className="text-4xl md:text-7xl font-black text-white mb-6 md:mb-8 tracking-tighter leading-[1.2] md:leading-tight break-keep">
               {line1}
               <br />

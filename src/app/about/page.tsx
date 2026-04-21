@@ -86,7 +86,7 @@ export default function AboutPage() {
               Next-Gen Trading Standard
             </span>
           </div>
-          {/* ✨ 폰트 사이즈 축소 및 줄바꿈 최적화 */}
+
           <h1 className="text-4xl md:text-[100px] font-black tracking-[calc(-0.05em)] leading-[1.2] md:leading-[0.95] mb-6 md:mb-10 break-keep">
             혁신을 넘어,
             <br />
@@ -135,7 +135,6 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              {/* ✨ 모바일 여백(mt, pt, gap) 타이트하게 축소 */}
               <div className="mt-8 md:mt-16 grid grid-cols-2 gap-4 md:gap-12 border-t border-white/10 pt-8 md:pt-16">
                 <div>
                   <div className="text-3xl md:text-5xl font-black text-white mb-2 font-mono tracking-tighter">
@@ -176,7 +175,6 @@ export default function AboutPage() {
             <h3 className="text-blue-500 font-bold uppercase tracking-[0.3em] text-xs md:text-sm mb-4">
               Core Philosophy
             </h3>
-            {/* ✨ 텍스트 크기 조절 및 줄바꿈 방지 적용 */}
             <h2 className="text-3xl md:text-6xl font-black tracking-tight text-white break-keep">
               타협하지 않는 원칙
             </h2>
@@ -211,12 +209,10 @@ export default function AboutPage() {
       </section>
 
       {/* 4. Contact CTA: 모바일 상하 여백 조절 및 가로 스크롤 방지 */}
-      {/* ✨ py-48을 py-24 md:py-48로 축소 */}
       <section className="relative py-24 md:py-48 px-6 text-center overflow-hidden border-t border-white/10">
         <StarfieldBackground />
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
-          {/* ✨ 텍스트 크기 조절 및 줄바꿈 방지 적용 */}
           <h2 className="text-3xl md:text-[80px] font-black mb-8 md:mb-12 tracking-[calc(-0.04em)] leading-[1.3] md:leading-[1.1] break-keep">
             압도적인 기술력,
             <br />
@@ -229,7 +225,6 @@ export default function AboutPage() {
             직접 경험해 보세요.
           </p>
 
-          {/* ✨ 가로 스크롤 방지를 위해 모바일에서는 패딩을 줄이고 최대 너비 제한(max-w-full) */}
           <button className="px-8 py-4 md:px-16 md:py-6 bg-blue-600 text-white font-black text-lg md:text-2xl hover:bg-blue-700 transition-all transform hover:scale-105 rounded-none shadow-[0_0_40px_rgba(37,99,235,0.4)] whitespace-nowrap max-w-full">
             무료체험 시작하기
           </button>
