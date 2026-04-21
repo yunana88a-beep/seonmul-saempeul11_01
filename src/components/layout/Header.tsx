@@ -237,7 +237,7 @@ export default function Header() {
                 </button>
               </div>
 
-              <nav className="flex flex-col flex-1 overflow-y-auto mt-4">
+              <nav className="flex flex-col flex-1 overflow-y-auto">
                 {NAV_ITEMS.map((item, index) => {
                   const active = isActive(item.href);
                   const isSubOpen = openSubMenu === item.label;
